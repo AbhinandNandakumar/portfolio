@@ -96,7 +96,7 @@ const Navbar = () => {
           
           {/* Mobile menu button */}
           <button 
-            className="md:hidden text-white focus:outline-none"
+            className="md:hidden text-white focus:outline-none mr-10"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           >
             <TfiMenuAlt className="w-6 h-6" />

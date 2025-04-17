@@ -93,34 +93,34 @@ const Home = () => {
 
   return (
     <div id="home" ref={containerRef} className="min-h-screen flex items-center justify-center">
-      <div className="container mx-auto px-4 py-16 md:py-32">
-        <div className="flex flex-col-reverse md:flex-row items-center justify-between gap-12">
-          {/* Left content */}
+      <div className="container mx-auto px-4 py-12 md:py-32">
+        <div className="flex flex-col-reverse md:flex-row items-center justify-between gap-8 md:gap-12">
+
           <motion.div 
             initial={{ opacity: 0, x: -50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
             className="w-full md:w-1/2 text-center md:text-left"
           >
-            <h1 ref={textRef} className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
+            <h1 ref={textRef} className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 md:mb-6">
               Hi, I'm <span className="name text-blue-400">Abhinand Nandakumar</span>
             </h1>
             
-            <p className="info text-lg md:text-xl mb-6 text-blue-100">
+            <p className="info text-lg md:text-xl mb-4 md:mb-6 text-blue-100">
               BTech in Computer Science Engineering at Government Engineering College, Thrissur
             </p>
             
-            <div className="text-gray-300 text-lg mb-8">
+            <div className="text-gray-300 text-base md:text-lg mb-6 md:mb-8">
               Passionate developer focused on creating intuitive and responsive web experiences using modern technologies.
             </div>
             
-            {/* Social Icons */}
-            <div className="flex flex-wrap justify-center md:justify-start gap-4 mb-8">
+
+            <div className="flex flex-wrap justify-center md:justify-start gap-3 md:gap-4 mb-6 md:mb-8">
               {socialLinks.map((link, index) => (
                 <div 
                   key={index}
                   onClick={link.onClick}
-                  className={`social-icon cursor-pointer p-3 rounded-full ${link.bgColor} text-white hover:scale-110 transition-all duration-300 flex items-center justify-center`}
+                  className={`social-icon cursor-pointer p-2 md:p-3 rounded-full ${link.bgColor} text-white hover:scale-110 transition-all duration-300 flex items-center justify-center`}
                   title={link.label}
                 >
                   {link.icon}
@@ -128,12 +128,11 @@ const Home = () => {
               ))}
             </div>
             
-            {/* CV Download button */}
             <button
               onClick={handleDownload}
               onMouseEnter={() => setIsHovered(true)}
               onMouseLeave={() => setIsHovered(false)}
-              className="bg-blue-600 hover:bg-blue-700 text-white py-3 px-8 rounded-full transition-all duration-300 flex items-center gap-2 shadow-lg hover:shadow-blue-500/50"
+              className="bg-blue-600 hover:bg-blue-700 text-white py-2 md:py-3 px-6 md:px-8 rounded-full transition-all duration-300 flex items-center gap-2 shadow-lg hover:shadow-blue-500/50"
             >
               <span>Download CV</span>
               {isHovered && (
@@ -149,11 +148,10 @@ const Home = () => {
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.3 }}
-            className="w-full md:w-5/12"
+            className="w-3/4 sm:w-4/5 md:w-5/12 max-w-xs md:max-w-none mx-auto md:mx-0"
           >
-            <div className="profile-card bg-blue-900/20 backdrop-filter backdrop-blur-lg p-4 rounded-lg border border-blue-400/30 shadow-[0_0_25px_rgba(59,130,246,0.5)]">
-              <div className="aspect-square overflow-hidden rounded-lg mb-4">
-                {/* Replace with your actual image */}
+            <div className="profile-card bg-blue-900/20 backdrop-filter backdrop-blur-lg p-3 md:p-4 rounded-lg border border-blue-400/30 shadow-[0_0_25px_rgba(59,130,246,0.5)]">
+              <div className="aspect-square overflow-hidden rounded-lg mb-3 md:mb-4">
                 <img 
                   src={profileImage} 
                   alt="Abhinand Nandakumar" 
@@ -165,8 +163,8 @@ const Home = () => {
                 />
               </div>
               <div className="text-center">
-                <h3 className="text-2xl font-semibold mb-2">Abhinand Nandakumar</h3>
-                <p className="text-blue-300">Web Developer & CS Engineer</p>
+                <h3 className="text-xl md:text-2xl font-semibold mb-1 md:mb-2">Abhinand Nandakumar</h3>
+                <p className="text-blue-300 text-sm md:text-base">Web Developer & CS Engineer</p>
               </div>
             </div>
           </motion.div>

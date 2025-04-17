@@ -4,6 +4,10 @@ import gsap from 'gsap';
 import ScrollTrigger from 'gsap/ScrollTrigger';
 import { FaGithub, FaExternalLinkAlt } from 'react-icons/fa';
 import profileImage from '../img/dp2.png';
+import axernImage from '../img/axern.png';
+import zudoImage from '../img/zudo.png';
+import chatImage from '../img/download.png';
+
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -12,25 +16,25 @@ const Projects = () => {
 
   const projects = [
     {
-      title: "Portfolio Website",
-      description: "A personal portfolio website built with React, Tailwind CSS, and GSAP animations.",
-      image: "/assets/projects/portfolio.jpg",
-      tags: ["React", "Tailwind CSS", "GSAP", "Responsive"],
-      githubUrl: "https://github.com/AbhinandNandakumar/portfolio",
+      title: "Axern AI",
+      description: "It is a personalized prompt generation tool designed to help users create tailored AI prompts efficiently and intuitively.",
+      image: axernImage,
+      tags: ["React","Node.js", "Tailwind CSS", "Firebase", "Gemini API"],
+      githubUrl: "https://github.com/AbhinandNandakumar/axern",
       liveUrl: "#"
     },
     {
-      title: "E-commerce Platform",
-      description: "A full-stack e-commerce application with product management, cart functionality, and payment integration.",
-      image: "/assets/projects/ecommerce.jpg",
-      tags: ["React", "Node.js", "MongoDB", "Express"],
-      githubUrl: "https://github.com/AbhinandNandakumar/ecommerce",
+      title: "Zudo AI",
+      description: "Zudo AI generates AI-based captions for uploaded images and descriptions.",
+      image: zudoImage,
+      tags: ["React", "Node.js", "Tailwind CSS", "Express"],
+      githubUrl: "https://github.com/AbhinandNandakumar/zudo-ai",
       liveUrl: "#"
     },
     {
       title: "AI Chat Application",
       description: "Real-time chat application with AI-powered responses and user authentication.",
-      image: "/assets/projects/chat.jpg",
+      image: chatImage,
       tags: ["React", "Firebase", "OpenAI API", "WebSockets"],
       githubUrl: "https://github.com/AbhinandNandakumar/ai-chat",
       liveUrl: "#"
@@ -89,7 +93,7 @@ const Projects = () => {
             >
               <div className="relative aspect-video overflow-hidden">
                 <img
-                  src={profileImage}
+                  src={project.image}
                   alt={project.title}
                   className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
                   onError={(e) => {

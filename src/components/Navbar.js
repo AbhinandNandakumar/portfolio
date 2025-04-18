@@ -19,7 +19,7 @@ const Navbar = () => {
       }
       
       // Update active section based on scroll position
-      const sections = ["#home", "#skills", "#projects", "#contact"];
+      const sections = ["#home", "#about","#skills", "#projects", "#contact"];
       const currentSection = sections.findLast(section => {
         const element = document.querySelector(section);
         if (!element) return false;

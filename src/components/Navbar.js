@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect , useRef} from 'react';
 import { TfiMenuAlt } from "react-icons/tfi";
 import { HashLink as Link } from 'react-router-hash-link';
 import gsap from "gsap";
@@ -8,6 +8,8 @@ const Navbar = () => {
   const [activeSection, setActiveSection] = useState("#home");
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  const navRef = useRef(null);
 
   // Handle scroll state for navbar background
   useEffect(() => {
@@ -33,6 +35,19 @@ const Navbar = () => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (navRef.current && !navRef.current.contains(event.target)) {
+        setMobileMenuOpen(false);
+      }
+    };
+  
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+  
 
   // Animation for navbar items
   useGSAP(() => {
@@ -62,10 +77,10 @@ const Navbar = () => {
   ];
 
   return (
-    <nav className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
+    <nav ref={navRef} className={`fixed top-0 left-0 w-full z-50 transition-all duration-300  ${
       scrolled ? 'bg-blue-900/80 backdrop-filter backdrop-blur-lg shadow-lg' : 'bg-transparent'
     }`}>
-      <div className="container mx-auto px-6 py-4">
+      <div className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
           {/* Logo */}
           <Link to="#home" onClick={() => setActiveSection("#home")} className="logo">
@@ -96,7 +111,7 @@ const Navbar = () => {
           
           {/* Mobile menu button */}
           <button 
-            className="md:hidden text-white focus:outline-none mr-10"
+            className="md:hidden text-white focus:outline-none mr-1"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           >
             <TfiMenuAlt className="w-6 h-6" />

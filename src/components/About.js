@@ -69,7 +69,6 @@ const About = () => {
             transition={{ duration: 0.5 }}
             className="relative"
           >
-            {/* Replaced image with a card containing info */}
             <div className="bg-blue-900/20 backdrop-filter backdrop-blur-lg p-8 rounded-2xl border-2 border-blue-500/30 shadow-[0_0_25px_rgba(59,130,246,0.4)] h-full">
               <h3 className="text-3xl font-bold mb-6 text-blue-400">Abhinand Nandakumar</h3>
               <p className="text-xl text-blue-200 mb-6">Full Stack Developer</p>
@@ -77,7 +76,6 @@ const About = () => {
                 Passionate about creating beautiful, functional web applications using modern technologies.
               </p>
               
-              {/* Stats section */}
               <div className="grid grid-cols-3 gap-4">
                 {stats.map((stat, index) => (
                   <div key={index} className="about-stats text-center">

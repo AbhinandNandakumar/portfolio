@@ -97,7 +97,7 @@ const Skills = () => {
               initial={{ opacity: 0, scale: 0.95 }}
               whileInView={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.5, delay: categoryIndex * 0.2 }}
-              className="skill-card flex-1 p-8 bg-blue-900/20 backdrop-filter backdrop-blur-lg border border-blue-500/30 rounded-xl shadow-[0_0_15px_rgba(59,130,246,0.3)]"
+              className="skill-card flex-1 p-8 bg-blue-900/20 backdrop-filter backdrop-blur-lg bborder-2 border-blue-500/30 shadow-[0_0_25px_rgba(59,130,246,0.4)] rounded-xl"
             >
               <h2 className="font-medium text-blue-300 tracking-widest mb-6 text-lg text-center md:text-left">
                 {category.category}
@@ -135,7 +135,7 @@ const Skills = () => {
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.3 }}
-          className="mt-16 text-center"
+          className="mt-16 text-center relative z-10"
         >
           <h3 className="text-2xl font-semibold mb-6 text-blue-300">Other Skills</h3>
           
@@ -144,12 +144,18 @@ const Skills = () => {
               "Git & GitHub", "UI/UX Design", "Responsive Design", 
               "REST API", "Firebase", "MongoDB", "Node.js", "Express"
             ].map((skill, index) => (
-              <div 
+              <motion.div 
                 key={index}
-                className="px-4 py-2 bg-blue-800/30 border border-blue-500/20 rounded-full text-blue-200 hover:bg-blue-700/40 transition-all duration-300"
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.3, delay: index * 0.05 }}
+                whileHover={{ scale: 1.05, backgroundColor: "rgba(59, 130, 246, 0.3)" }}
+                className="px-4 py-2 bg-blue-800/30 border border-blue-500/20 rounded-full text-blue-200 transition-all duration-300 relative overflow-hidden group"
               >
-                {skill}
-              </div>
+                {/* Animated background on hover */}
+                <div className="absolute inset-0 bg-gradient-to-r from-blue-500/0 via-blue-500/20 to-blue-500/0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+                <span className="relative z-10">{skill}</span>
+              </motion.div>
             ))}
           </div>
         </motion.div>

@@ -65,7 +65,7 @@ function App() {
         </div>
       </div>
 
-      <div className="app-container bg-gradient-to-br from-blue-900 via-black to-blue-900 text-white min-h-screen">
+      <div className="app-container bg-gradient-to-br from-blue-900 via-black to-blue-900 text-white min-h-screen overflow-x-hidden">
         <Navbar />
         <main>
           <Home />

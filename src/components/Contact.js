@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+import { SiGithub } from "react-icons/si";
+import { FaLinkedinIn, FaInstagram } from "react-icons/fa";
 import { MdEmail, MdPhone, MdLocationOn } from 'react-icons/md';
 import { saveAs } from 'file-saver';
 const Contact = () => {
-  const [formData, setState] = useState({
+  const [formData, setFormData] = useState({
     name: '',
     email: '',
     message: ''
@@ -13,22 +15,39 @@ const Contact = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setState({ ...formData, [name]: value });
+    setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
     
-    // Simulate form submission
-    setTimeout(() => {
-      setIsSubmitting(false);
-      setSubmitStatus('success');
-      setState({ name: '', email: '', message: '' });
+    try {
+      // Replace "YOUR_FORMSPREE_ID" with your actual Formspree form ID
+      const response = await fetch('https://formspree.io/f/xdkgnzne', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
       
-      // Clear success message after 5 seconds
+      if (response.ok) {
+        setSubmitStatus('success');
+        setFormData({ name: '', email: '', message: '' });
+      } else {
+        setSubmitStatus('error');
+        console.error('Form submission failed');
+      }
+    } catch (error) {
+      setSubmitStatus('error');
+      console.error('Error submitting form:', error);
+    } finally {
+      setIsSubmitting(false);
+      
+      // Clear status message after 5 seconds
       setTimeout(() => setSubmitStatus(null), 5000);
-    }, 1500);
+    }
   };
 
   const contactInfo = [
@@ -183,20 +202,20 @@ const Contact = () => {
               <h4 className="text-lg font-medium text-blue-300 mb-4">Follow Me</h4>
               <div className="flex space-x-4">
                 {[
-                  { icon: "fab fa-github", link: "https://github.com/AbhinandNandakumar" },
-                  { icon: "fab fa-linkedin-in", link: "https://www.linkedin.com/in/abhinand-nandakumar/" },
-                  { icon: "fab fa-instagram", link: "https://www.instagram.com/abhi_nand__n" }
+                  { icon: <SiGithub/>, link: "https://github.com/AbhinandNandakumar" },
+                  { icon: <FaLinkedinIn/>, link: "https://www.linkedin.com/in/abhinand-nandakumar/" },
+                  { icon: <FaInstagram/>, link: "https://www.instagram.com/abhi_nand__n" }
                 ].map((social, index) => (
                   <motion.a
                     key={index}
                     href={social.link}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="p-3 bg-blue-800/40 rounded-full hover:bg-blue-700 transition-colors duration-300"
+                    className="p-2 bg-blue-800/40 rounded-full hover:bg-blue-700 transition-colors duration-300"
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.95 }}
                   >
-                    <i className={social.icon}></i>
+                    {social.icon}
                   </motion.a>
                 ))}
               </div>

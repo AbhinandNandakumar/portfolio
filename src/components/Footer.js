@@ -39,7 +39,7 @@ const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-blue-900/40 backdrop-filter backdrop-blur-lg border-t border-blue-500/20">
+    <footer className="bg-blue-900/30 backdrop-filter backdrop-blur-lg border-t border-blue-500/20">
       <div className="container mx-auto px-6 py-12">
         <div className="flex flex-col md:flex-row justify-between items-center">
           <div className="mb-8 md:mb-0 text-center md:text-left">
@@ -47,7 +47,7 @@ const Footer = () => {
               <span className="text-blue-400">A</span>bhinand Nandakumar
             </h2>
             <p className="text-blue-200 max-w-md">
-              Computer Science Engineer focused on creating modern web experiences
+            Thanks for scrolling through my journey. Let's connect soon!
             </p>
           </div>
           

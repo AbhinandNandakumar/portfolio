@@ -168,37 +168,35 @@ const Home = () => {
             </button>
           </motion.div>
           
-          {/* Creative Profile Image Design */}
+              {/*profile image*/}
           <motion.div 
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.3 }}
             className="w-3/4 sm:w-2/3 md:w-5/12 relative max-w-xs md:max-w-sm mx-auto md:mx-0"
           >
-            {/* Background gradients */}
+
             <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full h-full">
               <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-blue-500/30 to-transparent rounded-full blur-2xl"></div>
               <div className="absolute bottom-0 right-0 w-3/4 h-3/4 bg-gradient-to-tl from-indigo-600/20 to-transparent rounded-full blur-xl"></div>
             </div>
             
-            {/* Rotating border effect */}
+
             <div className="rotating-border absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full h-full border-2 border-dashed border-blue-400/60 rounded-full"></div>
             
             <div className="rotating-border absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full h-full border-2 border-dotted border-indigo-500/40 rounded-full" style={{ animationDelay: "-5s" }}></div>
             
             {/* Main profile image container */}
             <div className="profile-image-container relative z-10 mx-auto">
-              {/* Decorative elements */}
+              
               <div className="absolute -top-4 -left-4 w-8 h-8 bg-blue-500 rounded-full opacity-70 animate-pulse"></div>
               <div className="absolute -bottom-3 -right-3 w-6 h-6 bg-indigo-600 rounded-full opacity-70 animate-ping" style={{ animationDuration: "3s" }}></div>
               
-              {/* Glowing circle behind image */}
               <div className="glow-effect absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-5/6 h-5/6 rounded-full bg-blue-500/20 backdrop-blur-sm"></div>
               
-              {/* Highlight circles */}
+             
               <div className="absolute top-0 right-0 w-1/4 h-1/4 bg-gradient-to-br from-white/80 to-transparent rounded-full blur-sm"></div>
               
-              {/* The actual image */}
               <div className="relative mx-auto overflow-hidden aspect-square rounded-full border-4 border-blue-400/50 shadow-lg shadow-blue-500/30 w-4/5 max-w-xs">
                 <img 
                   ref={imageRef}
@@ -218,7 +216,6 @@ const Home = () => {
               </div>
             </div>
             
-            {/* Floating icons/elements */}
             <div className="absolute top-1/4 right-0 w-8 h-8 bg-gradient-to-br from-blue-500/40 to-indigo-600/40 rounded-full animate-bounce" style={{ animationDuration: "2.5s" }}></div>
             <div className="absolute bottom-1/4 left-0 w-6 h-6 bg-gradient-to-tr from-blue-400/40 to-purple-500/40 rounded-full animate-bounce" style={{ animationDuration: "3.5s", animationDelay: "0.5s" }}></div>
           </motion.div>

@@ -47,26 +47,26 @@ const Navbar = () => {
   }, []);
 
   useEffect(() => {
-   const ctx = gsap.context(() => {
-   gsap.set(".nav-item", { opacity: 0, y: -20 });
+    const ctx = gsap.context(() => {
+      gsap.set(".nav-item", { opacity: 0, y: -20 });
 
-    gsap.to(".nav-item", {
-      opacity: 1,
-      y: 0,
-      duration: 0.5,
-      stagger: 0.1,
-      ease: "power3.out",
-    });
+      gsap.to(".nav-item", {
+        opacity: 1,
+        y: 0,
+        duration: 0.5,
+        stagger: 0.1,
+        ease: "power3.out",
+      });
 
-    gsap.from(".logo", {
-      opacity: 0,
-      x: -20,
-      duration: 0.8,
-    });
-   
-   },navRef);
-   return () => ctx.revert();
- }, []);
+      gsap.from(".logo", {
+        opacity: 0,
+        x: -20,
+        duration: 0.8,
+      });
+
+    }, navRef);
+    return () => ctx.revert();
+  }, []);
 
 
   const navItems = [
@@ -80,11 +80,10 @@ const Navbar = () => {
   return (
     <nav
       ref={navRef}
-      className={`fixed top-0 left-0 w-full z-50 transition-all duration-300  ${
-        scrolled
+      className={`fixed top-0 left-0 w-full z-50 transition-all duration-300  ${scrolled
           ? "bg-blue-900/80 backdrop-filter backdrop-blur-lg shadow-lg"
           : "bg-transparent"
-      }`}
+        }`}
     >
       <div className="container mx-auto px-20 py-4">
         <div className="flex items-center justify-between">
@@ -107,11 +106,10 @@ const Navbar = () => {
                 to={item.id}
                 smooth
                 onClick={() => setActiveSection(item.id)}
-                className={`nav-item text-lg transition-all duration-300 relative ${
-                  activeSection === item.id
+                className={`nav-item text-lg transition-all duration-300 relative ${activeSection === item.id
                     ? "text-blue-400"
                     : "text-white hover:text-blue-300"
-                }`}
+                  }`}
               >
                 {item.label}
                 {activeSection === item.id && (
@@ -148,11 +146,10 @@ const Navbar = () => {
                   setActiveSection(item.id);
                   setMobileMenuOpen(false);
                 }}
-                className={`block py-2 px-4 text-center ${
-                  activeSection === item.id
+                className={`block py-2 px-4 text-center ${activeSection === item.id
                     ? "text-blue-400"
                     : "text-white hover:text-blue-300"
-                }`}
+                  }`}
               >
                 {item.label}
               </Link>

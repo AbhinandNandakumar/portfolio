@@ -1,6 +1,7 @@
 import React, { useRef, useEffect, useState } from 'react';
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
+import CustomCursor from './components/CustomCursor';
 
 // Register plugins
 gsap.registerPlugin(ScrollTrigger);
@@ -139,6 +140,9 @@ const Layout = ({ children }) => {
         }}>
         </div>
       </div>
+      
+      {/* Custom Cursor */}
+      <CustomCursor />
       
       {/* Page content */}
       <div className="relative z-10">{children}</div>

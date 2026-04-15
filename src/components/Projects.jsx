@@ -28,12 +28,12 @@ const Projects = () => {
       liveUrl: "https://zudo-ai.vercel.app/"
     },
     {
-      title: "AI Chat Application",
-      description: "Real-time chat application with AI-powered responses and user authentication.",
-      image:  "/img/download.png",
-      tags: ["React", "Firebase", "OpenAI API", "WebSockets"],
-      githubUrl: "https://github.com/AbhinandNandakumar/ai-chat",
-      liveUrl: "#"
+      title: "Resyzer",
+      description: "An AI-powered resume analysis tool that uses AI to match resumes with job descriptions, providing match scores, missing keywords, and actionable suggestions for improvement.",
+      image:  "/img/resyzer.png",
+      tags: ["React", "Node.js", "MongoDB", "AI", "PDF Parsing"],
+      githubUrl: "https://github.com/AbhinandNandakumar/resyzer",
+      liveUrl: "https://resyzer.vercel.app/"
     }
   ];
 

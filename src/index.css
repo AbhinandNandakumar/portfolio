@@ -1,2 +1,42 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
 @import "tailwindcss";
 
+/* Typography */
+h1, h2, h3, h4 {
+  font-family: 'Space Grotesk', system-ui, sans-serif;
+}
+
+.font-mono, pre, code {
+  font-family: 'JetBrains Mono', 'Courier New', monospace;
+}
+
+@layer base {
+
+  html,
+  body {
+    @apply cursor-none;
+  }
+}
+
+/* Ensure interactive elements also hide the cursor */
+a,
+button,
+[role="button"] {
+  cursor: none !important;
+}
+
+/* Override browser autofill styling to match dark theme */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus {
+  -webkit-text-fill-color: rgb(191, 219, 254) !important;
+  /* blue-200 */
+  -webkit-box-shadow: 0 0 0px 1000px transparent inset !important;
+  border-color: rgba(59, 130, 246, 0.3) !important;
+  transition: background-color 5000s ease-in-out 0s;
+  caret-color: rgb(96, 165, 250);
+  /* blue-400 */
+}

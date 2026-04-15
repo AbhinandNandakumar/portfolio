@@ -1,167 +1,221 @@
 import React, { useRef, useEffect } from "react";
-import ScrollTrigger from "gsap/ScrollTrigger";
+import { motion } from "framer-motion";
 import gsap from "gsap";
+import ScrollTrigger from "gsap/ScrollTrigger";
+import { 
+  FaReact, FaPython, FaNodeJs, FaGitAlt, 
+  FaDatabase, FaCode, FaBootstrap 
+} from "react-icons/fa";
+import { 
+  SiFlutter, SiMongodb, SiFirebase, 
+  SiFigma, SiDocker, SiKubernetes 
+} from "react-icons/si";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const skillsData = [
-  { 
-    category: "PROGRAMMING LANGUAGES", 
-    skills: [
-      { name: "Python", level: 80 },
-      { name: "C", level: 60 },
-      { name: "JavaScript", level: 45 },
-      { name: "Java", level: 50 }
-    ]
-  },
-  { 
-    category: "SKILLS", 
-    skills: [
-      { name: "React, Tailwind", level: 80 },
-      { name: "Flutter", level: 60 },
-      { name: "Generative AI", level: 50 }
-    ]
-  }
-];
-
 const Skills = () => {
-  const progressBarsRef = useRef({});
-  const sectionRef = useRef(null);
+  const gridRef = useRef(null);
 
   useEffect(() => {
-    // Create a context for GSAP animations
-    const ctx = gsap.context(() => {
-      // Animate section title with better trigger settings
-      gsap.from(".skills-title", {
-        opacity: 0,
-        y: 30,
-        duration: 0.8,
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top 80%",
-          end: "top 20%",
-          toggleActions: "play none none reverse", // Play on enter, reverse on leave
-          once: false, // Allow animation to repeat
-        }
-      });
-
-      // Animate card containers with better settings
-      gsap.from(".skill-card", {
-        opacity: 0,
-        y: 50,
-        stagger: 0.3,
-        duration: 0.8,
-        scrollTrigger: {
-          trigger: ".skill-card",
-          start: "top 85%",
-          end: "top 15%",
-          toggleActions: "play none none reverse", // Play on enter, reverse on leave
-          once: false, // Allow animation to repeat
-        }
-      });
-
-      // Create a single ScrollTrigger for all progress bars
-      ScrollTrigger.create({
-        trigger: sectionRef.current,
-        start: "top 85%",
-        end: "bottom 15%",
-        onEnter: () => animateProgressBars(1),
-        onEnterBack: () => animateProgressBars(1),
-        onLeave: () => animateProgressBars(0),
-        onLeaveBack: () => animateProgressBars(0),
-      });
-      
-      // Initial animation to ensure skills are visible when directly navigating to the section
-      animateProgressBars(1);
-    }, sectionRef);
-
-    // Function to animate progress bars
-    function animateProgressBars(direction) {
-      Object.values(progressBarsRef.current).forEach((bar, index) => {
-        if (bar) {
-          const level = bar.getAttribute("data-level") + "%";
-          gsap.to(bar, {
-            width: direction ? level : "0%",
-            duration: 1,
-            delay: index * 0.1,
-            ease: "power3.out",
-          });
-        }
-      });
-    }
-
-    // Cleanup on unmount
-    return () => ctx.revert();
+    // We only need GSAP for the ScrollTrigger.refresh() now
+    // as Framer Motion handles the entrance.
+    const timer = setTimeout(() => ScrollTrigger.refresh(), 500);
+    return () => clearTimeout(timer);
   }, []);
 
+  const handleMouseMove = (e) => {
+    const target = e.currentTarget;
+    const rect = target.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+
+    const rotateX = (y - centerY) / 15;
+    const rotateY = (centerX - x) / 15;
+
+    gsap.to(target, {
+      rotateX,
+      rotateY,
+      duration: 0.4,
+      ease: "power2.out",
+      transformPerspective: 1000,
+    });
+
+    const glow = target.querySelector(".glow");
+    if (glow) {
+      gsap.to(glow, {
+        opacity: 1,
+        left: x - glow.offsetWidth / 2,
+        top: y - glow.offsetHeight / 2,
+        duration: 0.1,
+      });
+    }
+  };
+
+  const handleMouseLeave = (e) => {
+    gsap.to(e.currentTarget, {
+      rotateX: 0,
+      rotateY: 0,
+      duration: 0.6,
+      ease: "power2.inOut",
+    });
+    const glow = e.currentTarget.querySelector(".glow");
+    if (glow) {
+      gsap.to(glow, { opacity: 0, duration: 0.4 });
+    }
+  };
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+        delayChildren: 0.1
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { y: 20, opacity: 0, scale: 0.95 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      scale: 1,
+      transition: {
+        type: "spring",
+        stiffness: 100,
+        damping: 15
+      }
+    }
+  };
+
+  const SkillBox = ({ title, skills, icon: Icon, className, color }) => (
+    <motion.div
+      variants={itemVariants}
+      className={`${className}`}
+    >
+      <div
+        onMouseMove={handleMouseMove}
+        onMouseLeave={handleMouseLeave}
+        className="relative overflow-hidden p-6 bg-blue-900/10 backdrop-filter backdrop-blur-md border border-blue-500/30 rounded-2xl group transition-all duration-500 hover:border-blue-400/50 hover:bg-blue-900/20 shadow-[0_0_15px_rgba(59,130,246,0.1)] hover:shadow-[0_0_30px_rgba(59,130,246,0.3)] h-full w-full"
+        style={{ willChange: "transform", transformStyle: "preserve-3d" }}
+      >
+        {/* Static Center Glow */}
+        <div 
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 rounded-full blur-[60px] opacity-20 transition-opacity duration-500 group-hover:opacity-40"
+          style={{ background: `radial-gradient(circle, ${color || 'rgba(59, 130, 246, 0.4)'} 0%, transparent 70%)`, zIndex: 0 }}
+        />
+
+        {/* Mouse Follow Glow */}
+        <div className="glow pointer-events-none absolute w-64 h-64 opacity-0 rounded-full blur-[80px] transition-opacity duration-500" 
+             style={{ background: `radial-gradient(circle, ${color || 'rgba(59, 130, 246, 0.3)'} 0%, transparent 70%)`, zIndex: 0 }} 
+        />
+        
+        <div className="relative z-10 flex flex-col h-full justify-between pointer-events-none">
+          <div>
+            <div className="flex items-center gap-3 mb-4">
+              <div className={`p-2 rounded-xl bg-blue-500/10 text-2xl font-bold ${color ? `text-blue-300` : 'text-blue-400'}`}>
+                <Icon />
+              </div>
+              <h3 className="text-xs font-bold text-blue-200 tracking-widest uppercase opacity-70">{title}</h3>
+            </div>
+            
+            <div className="flex flex-wrap gap-2">
+              {skills.map((skill, i) => (
+                <span 
+                  key={i} 
+                  className="px-3 py-1 text-[11px] font-mono bg-blue-500/5 border border-blue-500/10 rounded-lg text-blue-100/90"
+                >
+                  {skill}
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </motion.div>
+  );
+
   return (
-    <div id="skills" ref={sectionRef} className="min-h-screen flex items-center py-24">
+    <div id="skills" className="min-h-screen py-24 flex items-center bg-transparent">
       <div className="container px-4 md:px-20 mx-auto">
         <div className="text-center mb-16">
-          <h2 className="skills-title text-4xl font-bold mb-4">My Skills</h2>
+          <h2 className="skills-title text-4xl font-bold mb-4 text-white">My Skills</h2>
           <div className="w-24 h-1 bg-blue-500 mx-auto mb-4"></div>
           <p className="text-xl text-blue-100 max-w-2xl mx-auto">
             Here are some of the skills that I am capable of handling
           </p>
         </div>
 
-        <div className="flex flex-col md:flex-row gap-8 justify-center">
-          {skillsData.map((category, categoryIndex) => (
-            <div
-              key={categoryIndex}
-              className="skill-card flex-1 p-8 bg-blue-900/20 backdrop-filter backdrop-blur-lg border-2 border-blue-500/30 shadow-[0_0_25px_rgba(59,130,246,0.4)] rounded-xl"
-            >
-              <h2 className="font-medium text-blue-300 tracking-widest mb-6 text-lg text-center md:text-left">
-                {category.category}
-              </h2>
-              
-              <div className="space-y-6">
-                {category.skills.map((skill, skillIndex) => {
-                  const refKey = `${categoryIndex}-${skillIndex}`;
-                  return (
-                    <div key={skillIndex} className="w-full">
-                      <div className="flex justify-between mb-2">
-                        <span className="text-white font-medium">{skill.name}</span>
-                        <span className="text-blue-300">{skill.level}%</span>
-                      </div>
-                      
-                      <div className="h-2.5 bg-blue-900/50 rounded-full w-full overflow-hidden">
-                        <div
-                          ref={(el) => (progressBarsRef.current[refKey] = el)}
-                          data-level={skill.level}
-                          className="h-full rounded-full bg-gradient-to-r from-blue-400 to-blue-600"
-                          style={{ width: "0%" }}
-                        >
-                        </div>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          ))}
-        </div>
-        
-        {/* Additional Skills Section */}
-        <div className="mt-16 text-center relative z-10">
-          <h3 className="text-2xl font-semibold mb-6 text-blue-300">Other Skills</h3>
-          
-          <div className="flex flex-wrap justify-center gap-4">
-            {[
-              "Git & GitHub", "UI/UX Design", "Responsive Design", 
-              "REST API", "Firebase", "MongoDB", "Node.js", "Express"
-            ].map((skill, index) => (
-              <div 
-                key={index}
-                className="px-4 py-2 bg-blue-800/30 border border-blue-500/20 rounded-full text-blue-200 transition-all duration-300 relative overflow-hidden group hover:scale-105 hover:bg-blue-500/30"
-              >
-                {/* Animated background on hover */}
-                <div className="absolute inset-0 bg-gradient-to-r from-blue-500/0 via-blue-500/20 to-blue-500/0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
-                <span className="relative z-10">{skill}</span>
-              </div>
-            ))}
-          </div>
-        </div>
+        <motion.div 
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: false, amount: 0.1 }}
+          className="grid grid-cols-1 md:grid-cols-4 gap-4 md:auto-rows-[160px] max-w-6xl mx-auto"
+        >
+          {/* Row 1: Frontend and Programming (Balanced 2+2) */}
+          <SkillBox 
+            title="Frontend Engineering"
+            skills={["React", "Next.js", "Tailwind CSS", "Bootstrap", "GSAP", "Framer Motion"]}
+            icon={FaReact}
+            className="md:col-span-2"
+            color="rgba(34, 211, 238, 0.4)"
+          />
+
+          <SkillBox 
+            title="Programming"
+            skills={["Python", "JavaScript", "C", "Java"]}
+            icon={FaCode}
+            className="md:col-span-2"
+            color="rgba(96, 165, 250, 0.3)"
+          />
+
+          {/* Row 2: Server Side and DevOps (Balanced 2+2) */}
+          <SkillBox 
+            title="Server Side"
+            skills={["Node.js", "Express", "REST API", "Websocket", "Flask"]}
+            icon={FaNodeJs}
+            className="md:col-span-2"
+            color="rgba(74, 222, 128, 0.3)"
+          />
+
+          <SkillBox 
+            title="Data & Devops"
+            skills={["SQL","MongoDB", "Firebase", "Docker", "Kubernetes"]}
+            icon={SiDocker}
+            className="md:col-span-2"
+            color="rgba(34, 197, 94, 0.3)"
+          />
+
+          {/* Row 3: Mobile, Design, and Tools (Balanced 1+1+2) */}
+          <SkillBox 
+            title="Mobile"
+            skills={["Flutter", "Dart"]}
+            icon={SiFlutter}
+            className="md:col-span-1"
+            color="rgba(2, 132, 199, 0.3)"
+          />
+
+          <SkillBox 
+            title="Design"
+            skills={["Figma", "UI/UX"]}
+            icon={SiFigma}
+            className="md:col-span-1"
+            color="rgba(168, 85, 247, 0.3)"
+          />
+
+          <SkillBox 
+            title="Tools & Environment"
+            skills={["Git & GitHub", "VS Code", "Postman"]}
+            icon={FaGitAlt}
+            className="md:col-span-2"
+            color="rgba(239, 68, 68, 0.3)"
+          />
+        </motion.div>
       </div>
     </div>
   );
